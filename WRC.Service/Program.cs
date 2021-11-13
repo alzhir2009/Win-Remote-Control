@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WRC.Service.Interfaces;
+using WRC.Service.Services;
 
 namespace WRC.Service
 {
@@ -18,6 +20,9 @@ namespace WRC.Service
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<IOptionsProvider, RegistryOptionsProvider>();
+                    services.AddSingleton<ISystemCommandExecutor, CommandExecutor>();
+                    services.AddSingleton<IServerListener, ServerListener>();
                     services.AddHostedService<Worker>();
                 });
     }
